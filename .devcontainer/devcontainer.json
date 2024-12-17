@@ -1,0 +1,35 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/python
+{
+    // 随便起个名字，不限制
+    "name": "NGC-pytorch24.09",
+    // 基于NGC docker镜像构建容器，如果系统内没有镜像，会自动拉取
+    "image": "nvcr.io/nvidia/pytorch:24.09-py3",
+    // 容器内的工作空间路径
+    "workspaceFolder": "/workspace",
+    // 多个挂载路径
+    "mounts": [
+        "source=/home/codes,target=/workspace/codes,type=bind",
+        "source=/home/git_repo,target=/workspace/git_repo,type=bind"
+    ],
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "python.defaultInterpreterPath": "/usr/local/bin/python",
+                "editor.tabSize": 4
+            },
+           	// 自动安装扩展
+            "extensions": [
+                "ms-python.python", // Python扩展
+                "njpwerner.autodocstring",  // AutoDocstring 扩展
+                "ms-toolsai.jupyter",  // Jupyter 扩展
+                "ms-azuretools.vscode-docker",
+                "mechatroner.rainbow-csv"   // rainvbow csv扩展
+            ]
+        }
+    },
+    // 容器启动后自动运行命令, 注意requirements文件必须是绝对路径
+    // "postCreateCommand": "pip install -r /workspace/codes/requirements.txt",
+    // "postCreateCommand": "chmod +x .devcontainer/install_requirements.sh && .devcontainer/install_requirements.sh",
+    "remoteUser": "root"
+}
