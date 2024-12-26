@@ -1,0 +1,30 @@
+version: "3.9"  # 定义 Docker Compose 文件的版本规范, 推荐使用 3.8 或更高版本
+
+services:  # 定义服务
+  ngc_pytorch_nemo_gai: # 服务名称，可以随意命名
+    # image: ngc_pytorch_nemo_gai:24.12  # 替换为你的 Docker 镜像名
+    container_name: ngc_pytorch_nemo_gai  # 设置容器名称（可选）
+    build: 
+      context: ../..
+      dockerfile: ./codes/GenerativeAIExamples/
+    entrypoint: ""  # 禁用默认 ENTRYPOINT
+    # deploy:
+    #   resources:
+    #       reservations:
+    #         devices:
+    #           - driver: nvidia
+    #             capabilities: [gpu]
+    #             count: all # 使用所有可用的GPU，或改为具体的数量
+    #             # device_ids: ["0"] # 也可以指定使用 GPU 0
+    ports:  # 映射宿主机和容器端口
+      - 8080:8080  # 格式为 "宿主机端口:容器端口"
+      - 8888:8888  # 格式为 "宿主机端口:容器端口"
+      - 6006:6006  # 格式为 "宿主机端口:容器端口"
+    volumes:  # 挂载卷（可选）
+      - /root/codes:/workspace/codes # 宿主机目录:容器目录
+      - /root/git_repo:/workspace/git_repo # 宿主机目录:容器目录
+    # environment:  # 设置环境变量（可选）
+      # - ENV_VAR_NAME=value
+    # command: ["sh", "-c", "nvidia-smi"] # 容器启动时运行的命令（可选）
+    # command: "echo \"Hello World!\"" # 容器启动时运行的命令（可选）
+    command: ["sh", "-c", "nvidia-smi && echo 'Hello World!'"]
